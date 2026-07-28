@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connect</title>
+<link rel="icon" type="image/png" href="favicon.png.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --bg-alt: #F4F5F3;
+    --ink: #1B1D1F;
+    --muted: #6C716F;
+    --line: #E5E7E3;
+    --accent: #1F4FD8;
+    --accent-soft: #EAEFFC;
+    --whats: #25D366;
+    --whats-ink: #0C3D22;
+    --radius: 12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif;letter-spacing:-0.01em;font-weight:600;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  section{padding:64px 0;}
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+
+  /* HEADER */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{height:68px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;}
+  .logo em{color:var(--accent);font-style:normal;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:8px;
+    font-weight:600;font-size:14px;
+    border:1px solid transparent;cursor:pointer;
+  }
+  .btn-whats{background:var(--whats);color:var(--whats-ink);}
+  .btn-outline{background:transparent;border-color:var(--line);color:var(--ink);padding:10px 18px;}
+  .btn svg{width:17px;height:17px;flex-shrink:0;}
+
+  /* HERO */
+  .hero .wrap{
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+    padding-top:20px;padding-bottom:20px;
+  }
+  .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.02em;
+    color:var(--accent);margin-bottom:18px;display:block;
+  }
+  .hero h1{font-size:clamp(30px,4.4vw,46px);line-height:1.1;margin-bottom:18px;}
+  .hero p.lead{font-size:17px;color:var(--muted);max-width:440px;margin-bottom:28px;}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+
+  .hero-photo{
+    aspect-ratio:4/3;border-radius:var(--radius);
+    border:1px solid var(--line);
+    background:var(--bg-alt);
+    overflow:hidden;position:relative;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;}
+
+  .photo-placeholder{
+    width:100%;height:100%;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:8px;
+    color:var(--muted);text-align:center;padding:20px;
+  }
+  .photo-placeholder svg{width:30px;height:30px;opacity:.55;}
+  .photo-placeholder span{font-size:12px;font-family:'JetBrains Mono',monospace;}
+  .photo-placeholder small{font-size:11px;opacity:.7;}
+
+  hr.rule{border:none;border-top:1px solid var(--line);}
+
+  /* CATALOG INTRO / DISCLAIMER */
+  .catalog-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;margin-bottom:36px;flex-wrap:wrap;
+  }
+  .catalog-head h2{font-size:clamp(24px,3vw,32px);margin-bottom:8px;}
+  .catalog-head p{color:var(--muted);font-size:15px;max-width:420px;}
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    background:var(--accent-soft);color:var(--accent);
+    padding:5px 10px;border-radius:6px;margin-bottom:10px;
+  }
+
+  .note-box{
+    background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;display:flex;gap:14px;align-items:flex-start;
+    margin-bottom:40px;
+  }
+  .note-box svg{width:20px;height:20px;color:var(--accent);flex-shrink:0;margin-top:2px;}
+  .note-box p{font-size:14px;color:var(--muted);}
+  .note-box strong{color:var(--ink);}
+  .note-box a{color:var(--accent);font-weight:600;}
+
+  /* PRODUCTS */
+  .products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 24px;}
+  .card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--bg);}
+  .card-photo{
+    aspect-ratio:1/1;background:var(--bg-alt);position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .card-photo img{width:100%;height:100%;object-fit:cover;}
+  .card-num{
+    position:absolute;top:10px;left:10px;
+    width:24px;height:24px;border-radius:50%;
+    background:var(--bg);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  }
+  .card-body{padding:16px 18px 18px;}
+  .card h3{font-size:16px;margin-bottom:4px;}
+  .card p.desc{font-size:13px;color:var(--muted);margin-bottom:14px;min-height:34px;}
+  .card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--line);}
+  .card-cta{font-size:13px;font-weight:600;color:var(--whats-ink);display:flex;align-items:center;gap:5px;}
+  .card-cta svg{width:14px;height:14px;}
+
+  /* CATALOG COMPLETO CTA */
+  .catalog-full{
+    margin-top:44px;border:1px dashed var(--line);border-radius:var(--radius);
+    padding:28px 26px;display:flex;justify-content:space-between;align-items:center;
+    gap:20px;flex-wrap:wrap;background:var(--bg-alt);
+  }
+  .catalog-full h4{font-size:16px;margin-bottom:4px;}
+  .catalog-full p{font-size:13.5px;color:var(--muted);max-width:460px;}
+
+  /* TRUST STRIP */
+  .trust-strip{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:28px 0;
+  }
+  .trust-strip div{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);}
+  .trust-strip svg{width:18px;height:18px;color:var(--accent);flex-shrink:0;}
+
+  /* CTA FINAL */
+  .cta-final{text-align:center;padding:56px 0;}
+  .cta-final h2{font-size:clamp(24px,3.2vw,32px);margin-bottom:10px;}
+  .cta-final p{color:var(--muted);margin-bottom:26px;}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  footer .foot-links{display:flex;gap:20px;font-size:13px;color:var(--muted);}
+  footer .foot-links a:hover{color:var(--ink);}
+
+  .float-whats{
+    position:fixed;bottom:20px;right:20px;z-index:60;
+    width:54px;height:54px;border-radius:50%;
+    background:var(--whats);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.18);
+  }
+  .float-whats svg{width:26px;height:26px;color:var(--whats-ink);}
+
+  @media (max-width: 860px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero-photo{order:-1;}
+    .products{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width: 560px){
+    .products{grid-template-columns:1fr;}
+    .catalog-full{flex-direction:column;align-items:flex-start;}
+    header .wrap{height:60px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================================================================
+  CONFIGURAÇÃO RÁPIDA
+  1) Troque o número do WhatsApp abaixo pelo real da loja.
+  2) Troque as fotos: cada produto tem um <img data-photo="..."> —
+     é só apontar o "src" pro arquivo da foto real (ex: carregador.jpg).
+     Enquanto não tiver a foto, aparece um placeholder de "foto pendente".
+=================================================================== -->
+<script>
+  const WHATS_NUMBER = "5548991077261";
+  function whatsLink(msg){ return `https://wa.me/${WHATS_NUMBER}?text=${encodeURIComponent(msg)}`; }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-whats]').forEach(el=>{
+      el.setAttribute('href', whatsLink(el.getAttribute('data-whats')));
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener');
+    });
+    // se a foto não existir/carregar, mostra o placeholder no lugar
+    document.querySelectorAll('img[data-photo]').forEach(img=>{
+      img.addEventListener('error', () => {
+        const holder = img.closest('.card-photo, .hero-photo');
+        if(holder){
+          img.remove();
+          const ph = document.createElement('div');
+          ph.className = 'photo-placeholder';
+          ph.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/><path d="M8 5l1.5-2h5L16 5"/></svg><span>FOTO PENDENTE</span><small>${img.dataset.photo}</small>`;
+          holder.appendChild(ph);
+        }
+      });
+    });
+  });
+</script>
+
+<header>
+  <div class="wrap">
+    <div class="logo">Connect<em>.</em></div>
+    <a class="btn btn-whats" data-whats="Oi! Quero saber mais sobre os produtos da Connect.">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.42 1.32 4.9L2 22l5.31-1.39a9.87 9.87 0 0 0 4.73 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.06c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.11.11-1.8-.12-.41-.13-.94-.31-1.62-.6-2.85-1.23-4.7-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.38c.26-.28.56-.35.75-.35h.53c.17 0 .4-.03.62.48.24.56.81 1.96.88 2.1.07.15.11.32.02.51-.09.19-.13.31-.26.48-.13.16-.28.36-.4.48-.13.13-.27.28-.11.55.16.28.71 1.19 1.53 1.94 1.06.96 1.94 1.26 2.22 1.4.28.14.44.12.61-.07.17-.19.7-.82.88-1.1.18-.28.36-.23.6-.14.24.09 1.53.73 1.79.86.26.13.43.19.5.3.07.11.07.62-.17 1.3Z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="kicker">CRICIÚMA - REGIÃO</span>
+        <h1>Tudo que você precisa para estar sempre CONNECT'ado.</h1>
+        <p class="lead">Peça pelo WhatsApp, combine forma de pagamento e entrega direto com a gente. Simples assim.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-whats" data-whats="Oi! Vim pela landing page da Connect e quero fazer um pedido.">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.42 1.32 4.9L2 22l5.31-1.39a9.87 9.87 0 0 0 4.73 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.06c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.11.11-1.8-.12-.41-.13-.94-.31-1.62-.6-2.85-1.23-4.7-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.38c.26-.28.56-.35.75-.35h.53c.17 0 .4-.03.62.48.24.56.81 1.96.88 2.1.07.15.11.32.02.51-.09.19-.13.31-.26.48-.13.16-.28.36-.4.48-.13.13-.27.28-.11.55.16.28.71 1.19 1.53 1.94 1.06.96 1.94 1.26 2.22 1.4.28.14.44.12.61-.07.17-.19.7-.82.88-1.1.18-.28.36-.23.6-.14.24.09 1.53.73 1.79.86.26.13.43.19.5.3.07.11.07.62-.17 1.3Z"/></svg>
+            Fazer pedido
+          </a>
+          <a class="btn btn-outline" href="#produtos">Ver principais produtos</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img data-photo="principal.png" src="principal.png" alt="Acessórios Connect">
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="produtos">
+    <div class="wrap">
+      <div class="catalog-head">
+        <div>
+          <span class="badge">★ MAIS PEDIDOS</span>
+          <h2>Nossos principais produtos</h2>
+          <p>Uma seleção do que mais sai — não é o estoque completo.</p>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16" r=".6" fill="currentColor"/></svg>
+        <p><strong>Isso é só uma vitrine.</strong> Trabalhamos com um catálogo bem maior e também fazemos <strong>encomenda de produtos específicos</strong>. Procurando um modelo ou marca em particular? <a data-whats="Oi! Quero consultar o estoque completo / fazer uma encomenda específica.">Chama no WhatsApp e a gente confere pra você</a>.</p>
+      </div>
+
+      <div class="products">
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">1</span>
+            <img data-photo="carregador-tipo-c.png" src="carregador-tipo-c.png" alt="Carregador Tipo C">
+          </div>
+          <div class="card-body">
+            <h3>Carregador Tipo C</h3>
+            <p class="desc">Entrada USB-C, carga rápida pra iPhone, iPad e AirPods.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">20W</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço do Carregador Tipo C.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">2</span>
+            <img data-photo="carregador-lightning.png" src="carregador-lightning.png" alt="Carregador Lightning">
+          </div>
+          <div class="card-body">
+            <h3>Carregador Lightning</h3>
+            <p class="desc">Entrada Lightning, direto na tomada, sem precisar de cabo extra.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">20W</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço do Carregador Lightning.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">3</span>
+            <img data-photo="cabo-tipo-c.png" src="cabo-tipo-c.png" alt="Cabo Tipo C">
+          </div>
+          <div class="card-body">
+            <h3>Cabo Tipo C</h3>
+            <p class="desc">USB-C nas duas pontas, resistente pro dia a dia.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">1M</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço do Cabo Tipo C.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">4</span>
+            <img data-photo="cabo-lightning.png" src="cabo-lightning.png" alt="Cabo Lightning">
+          </div>
+          <div class="card-body">
+            <h3>Cabo Lightning</h3>
+            <p class="desc">USB-C para Lightning, carrega e sincroniza sem drama.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">1M</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço do Cabo Lightning.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">5</span>
+            <img data-photo="earx.png" src="earx.png" alt="Fone com fio Apple">
+          </div>
+          <div class="card-body">
+            <h3>Fone com fio Apple</h3>
+            <p class="desc">Simples, sem pilha e sem parear — conecta e já usa.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">COM FIO</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço do Fone com fio Apple.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">6</span>
+            <img data-photo="powerbank.png" src="powerbank.png" alt="Power Bank MagSafe">
+          </div>
+          <div class="card-body">
+            <h3>Power Bank MagSafe</h3>
+            <p class="desc">Encaixa e carrega sem fio, direto na traseira do iPhone.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">5000mAh</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço do Power Bank MagSafe.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">7</span>
+            <img data-photo="airpods.png" src="airpods.png" alt="AirPods">
+          </div>
+          <div class="card-body">
+            <h3>AirPods</h3>
+            <p class="desc">Som limpo e encaixe leve, prontos pra usar no dia a dia.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">2ª/3ª GER.</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço dos AirPods.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">8</span>
+            <img data-photo="airpods-pro.png" src="airpods-pro.png" alt="AirPods Pro">
+          </div>
+          <div class="card-body">
+            <h3>AirPods Pro</h3>
+            <p class="desc">Cancelamento de ruído pra rua, trabalho ou treino.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">ANC</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço dos AirPods Pro.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-photo"><span class="card-num">9</span>
+            <img data-photo="airpods-max.png" src="airpods-max.png" alt="AirPods Max">
+          </div>
+          <div class="card-body">
+            <h3>AirPods Max</h3>
+            <p class="desc">Áudio espacial e conforto over-ear pra quem curte qualidade.</p>
+            <div class="card-foot">
+              <span class="mono" style="color:var(--muted);font-size:11.5px;">OVER-EAR</span>
+              <a class="card-cta" data-whats="Oi! Quero saber o preço dos AirPods Max.">Pedir no zap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="catalog-full">
+        <div>
+          <h4>Não achou o que precisa aqui?</h4>
+          <p>Temos mais itens disponíveis e também fazemos encomenda de produtos específicos — é só pedir.</p>
+        </div>
+        <a class="btn btn-whats" data-whats="Oi! Quero consultar o estoque completo ou fazer uma encomenda de um produto específico.">
+          Consultar estoque completo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0;padding-bottom:0;">
+    <div class="wrap">
+      <div class="trust-strip">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>Entrega rápida</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>Pagamento facilitado</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>Atendimento direto no WhatsApp</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>Encomenda sob consulta</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="wrap">
+      <h2>Bora resolver isso agora?</h2>
+      <p>Manda um "oi" que a gente te ajuda a escolher certo.</p>
+      <a class="btn btn-whats" data-whats="Oi! Quero montar meu kit de acessórios com a Connect.">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.42 1.32 4.9L2 22l5.31-1.39a9.87 9.87 0 0 0 4.73 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.06c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.11.11-1.8-.12-.41-.13-.94-.31-1.62-.6-2.85-1.23-4.7-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.38c.26-.28.56-.35.75-.35h.53c.17 0 .4-.03.62.48.24.56.81 1.96.88 2.1.07.15.11.32.02.51-.09.19-.13.31-.26.48-.13.16-.28.36-.4.48-.13.13-.27.28-.11.55.16.28.71 1.19 1.53 1.94 1.06.96 1.94 1.26 2.22 1.4.28.14.44.12.61-.07.17-.19.7-.82.88-1.1.18-.28.36-.23.6-.14.24.09 1.53.73 1.79.86.26.13.43.19.5.3.07.11.07.62-.17 1.3Z"/></svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">Connect<em>.</em></div>
+    <div class="foot-links">
+      <a data-whats="Oi! Vim pelo site da Connect.">WhatsApp</a>
+      <a href="#produtos">Produtos</a>
+    </div>
+  </div>
+</footer>
+
+<a class="float-whats" data-whats="Oi! Tenho uma dúvida sobre os produtos da Connect." aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.42 1.32 4.9L2 22l5.31-1.39a9.87 9.87 0 0 0 4.73 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.06c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.11.11-1.8-.12-.41-.13-.94-.31-1.62-.6-2.85-1.23-4.7-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.38c.26-.28.56-.35.75-.35h.53c.17 0 .4-.03.62.48.24.56.81 1.96.88 2.1.07.15.11.32.02.51-.09.19-.13.31-.26.48-.13.16-.28.36-.4.48-.13.13-.27.28-.11.55.16.28.71 1.19 1.53 1.94 1.06.96 1.94 1.26 2.22 1.4.28.14.44.12.61-.07.17-.19.7-.82.88-1.1.18-.28.36-.23.6-.14.24.09 1.53.73 1.79.86.26.13.43.19.5.3.07.11.07.62-.17 1.3Z"/></svg>
+</a>
+
+</body>
+</html>
